@@ -1,28 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const url = 'mongodb://localhost:27017/node';
+const DB_URL = "mongodb://localhost:27017/blog";
 
-mongoose.connect(url)
-  .then(() => console.log('MongoDB connected successfully!'))
-  .catch(err => console.error('Error connecting to MongoDB:', err));
+mongoose.set('strictQuery', true);
 
-// MongoDB connection events
-mongoose.connection.on('connected', () => {
-  console.log('Mongoose connected to DB');
-});
+const connectDB = () => {
+    return mongoose.connect(DB_URL, {
+    })
+};
 
-mongoose.connection.on('error', (err) => {
-  console.error(`Mongoose connection error: ${err}`);
-});
-
-mongoose.connection.on('disconnected', () => {
-  console.log('Mongoose disconnected from DB');
-});
-
-// Handle MongoDB disconnection on app termination
-process.on('SIGINT', () => {
-  mongoose.connection.close(() => {
-    console.log('MongoDB connection closed due to app termination');
-    process.exit(0);
-  });
-});
+module.exports = connectDB

@@ -16,6 +16,7 @@ controller.list = async (req, res) => {
 
 controller.create = async (req, res) => {
   try {
+    console.log('hi');
     const { title } = req.body;
 
     const newBlog = new Blog({ title });
